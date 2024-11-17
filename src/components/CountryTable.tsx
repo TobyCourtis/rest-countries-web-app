@@ -11,7 +11,7 @@ import './CountryTable.css';
 
 
 const CountryTable: React.FC = () => {
-    const LOCAL_STORAGE_FAVOURITES_KEY = "favourites";
+    const LOCAL_STORAGE_FAVOURITES_KEY: string = "favourites";
 
     const [rowData, setRowData] = useState<CountryRow[]>([]);
     const [favourites, setFavourites] = useState<Set<string>>(() => {
@@ -123,9 +123,16 @@ const CountryTable: React.FC = () => {
         return externalFilter !== "none";
     }, [externalFilter]);
 
+    const onFilterTextBoxChanged = useCallback(() => {
+        gridRef.current!.api.setGridOption(
+            "quickFilterText",
+            (document.getElementById("filter-text-box") as HTMLInputElement).value,
+        );
+    }, []);
+
     return (
         <div className={'ag-theme-quartz-dark outer-country-table'}>
-            <div className={'buttons-div'}>
+            <div className={'filter-content-div'}>
                 <label>
                     <input
                         type="radio"
@@ -143,9 +150,17 @@ const CountryTable: React.FC = () => {
                     />
                     Favourites
                 </label>
+                <span>Search:</span>
+                <input
+                    type="text"
+                    id="filter-text-box"
+                    placeholder="Filter..."
+                    onInput={onFilterTextBoxChanged}
+                />
             </div>
             <div className={"country-grid"}>
                 <AgGridReact
+                    className={'ag-country-grid'}
                     ref={gridRef}
                     rowData={rowData}
                     columnDefs={columns}
