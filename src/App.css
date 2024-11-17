@@ -6,6 +6,7 @@ html, body, #root {
 .App {
     height: 100%;
     overflow: hidden;
+    background: color-mix(in srgb, #182230, #101828 50%);
 }
 
 .title {
@@ -16,6 +17,7 @@ html, body, #root {
 
 #title{
     padding-left: 20px;
+    color: white;
 }
 
 .country-table {
