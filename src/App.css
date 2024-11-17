@@ -1,0 +1,23 @@
+html, body, #root {
+    height: 100%;
+    overflow: hidden;
+}
+
+.App {
+    height: 100%;
+    overflow: hidden;
+}
+
+.title {
+    height: 10%;
+    display: flex;
+    align-items: center;
+}
+
+#title{
+    padding-left: 20px;
+}
+
+.country-table {
+    height: 90%;
+}

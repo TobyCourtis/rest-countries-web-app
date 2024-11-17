@@ -1,0 +1,15 @@
+.flag {
+    display: block;
+    width: 40px;
+    height: auto;
+    margin-right: 12px;
+    filter: brightness(1.1);
+}
+
+.imgSpanLogo {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
