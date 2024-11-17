@@ -12,4 +12,5 @@ export interface CountryRow {
     population: number;
     languages: string;
     currency: string;
+    isFavourite: boolean;
 }
