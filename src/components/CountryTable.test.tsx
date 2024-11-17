@@ -2,6 +2,7 @@ import {render, screen, fireEvent, waitFor, cleanup} from '@testing-library/reac
 import CountryTable from './CountryTable';
 import {fetchCountries} from '../api/api';
 import {act} from "react";
+import '@testing-library/jest-dom';
 
 jest.mock('../api/api', () => ({
     fetchCountries: jest.fn(),
@@ -38,6 +39,15 @@ describe('CountryTable', () => {
             expect(fetchCountries).toHaveBeenCalled();
         });
     }
+
+    test('renders the country table', async () => {
+        await renderCountryTable();
+
+        expect(screen.getByText('France')).toBeInTheDocument();
+        expect(screen.getByText('French')).toBeInTheDocument();
+        expect(screen.getByText('Japanese')).toBeInTheDocument();
+        expect(screen.getByText('5678')).toBeInTheDocument();
+    });
 
     test('loads favourites from local storage', async () => {
         localStorage.setItem('favourites', JSON.stringify(['France', 'Germany']));

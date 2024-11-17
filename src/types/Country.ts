@@ -4,6 +4,7 @@ export interface Country {
     population: number;
     languages?: { [key: string]: string };
     currencies?: { [key: string]: { name: string } };
+    region: string;
 }
 
 export interface CountryRow {
@@ -13,4 +14,10 @@ export interface CountryRow {
     languages: string;
     currency: string;
     isFavourite: boolean;
+    region: string;
+}
+
+export interface CountryModalProps {
+    country: CountryRow;
+    onClose: () => void;
 }

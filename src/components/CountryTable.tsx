@@ -9,6 +9,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import './CountryTable.css';
 import CountryDataError from "./CountryDataError";
+import CountryModal from "./CountryModal";
 
 
 const CountryTable: React.FC = () => {
@@ -21,6 +22,8 @@ const CountryTable: React.FC = () => {
     })
     const gridRef = useRef<AgGridReact<CountryRow>>(null);
     const [externalFilter, setExternalFilter] = useState<string>("none")
+    const [selectedCountry, setSelectedCountry] = useState<CountryRow | null>(null);
+
 
     useMemo(() => {
         fetchCountries()
@@ -45,7 +48,8 @@ const CountryTable: React.FC = () => {
             currency: Object.values(c.currencies || {})
                 .map((cur) => cur.name)
                 .join(', '),
-            isFavourite: favourites.has(c.name.common)
+            isFavourite: favourites.has(c.name.common),
+            region: c.region
         }));
     }
 
@@ -136,6 +140,16 @@ const CountryTable: React.FC = () => {
         };
     }, []);
 
+    const closeModal = () => {
+        setSelectedCountry(null);
+    };
+
+    const countryRowSelected = (event: any) => {
+        if (event?.data) {
+            setSelectedCountry(event.data);
+        }
+    };
+
     return (
         <div className={'ag-theme-quartz-dark outer-country-table'}>
             <div className={'filter-content-div'}>
@@ -170,12 +184,7 @@ const CountryTable: React.FC = () => {
                     ref={gridRef}
                     rowData={rowData}
                     columnDefs={columns}
-                    onRowClicked={(event) => {
-                        if (event?.data) {
-                            console.log(`Country selected ${event?.data.name}`)
-                            console.log(event.data)
-                        }
-                    }}
+                    onRowClicked={(e) => countryRowSelected(e)}
                     pagination={true}
                     paginationPageSize={30}
                     isExternalFilterPresent={isExternalFilterPresent}
@@ -185,6 +194,8 @@ const CountryTable: React.FC = () => {
                     noRowsOverlayComponentParams={noRowsOverlayComponentParams}
                 />
             </div>
+
+            {selectedCountry && <CountryModal country={selectedCountry} onClose={closeModal}/>}
         </div>
     )
 }

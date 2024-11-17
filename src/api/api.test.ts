@@ -20,7 +20,8 @@ describe('fetchCountries', () => {
                 },
                 currencies: {
                     CHF: { name: "Swiss Franc" }
-                }
+                },
+                region: "Europe"
             },
             {
                 name: { common: "United Kingdom" },
@@ -33,7 +34,8 @@ describe('fetchCountries', () => {
                     GBP: {
                         name: "British pound"
                     }
-                }
+                },
+                region: "Europe"
             }
         ];
         mockedAxios.get.mockResolvedValueOnce({ data: mockCountries });
