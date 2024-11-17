@@ -20,4 +20,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 `npm test`
 
-Using jest as the test runner
+Using jest as the test runner.
+
+
+### About
+
+Please see `considerations.md` for design considerations and future plans.
