@@ -14,27 +14,33 @@
     justify-content: center;
 }
 
-button {
-    appearance: none;
-    background-color: var(--ag-background-color);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    height: 36px;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: .01em;
-    padding: 0.375em 1em 0.4em;
-    white-space: nowrap;
-    margin-right: 6px;
-    margin-bottom: 8px;
-    transition: background-color .25s ease-in-out;
+.buttons-div {
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
-.buttons-div {
+.buttons-div label {
+    display: flex;
+    align-items: center;
     height: 36px;
-    width: 100%
+    padding: 0 15px;
+    border-radius: 9px;
+    background-color: var(--ag-background-color);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.buttons-div input[type="radio"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+}
+
+.buttons-div input[type="radio"]:checked + span {
+    color: #b3c7e6;
 }
 
 .country-grid {

@@ -116,12 +116,23 @@ const CountryTable: React.FC = () => {
     return (
         <div className={'ag-theme-quartz-dark outer-country-table'}>
             <div className={'buttons-div'}>
-                <button onClick={() => externalFilterChanged("favourite")}>
-                    Show Favourites
-                </button>
-                <button onClick={() => externalFilterChanged("none")}>
-                    Hide Favourites
-                </button>
+                <label>
+                    <input
+                        type="radio"
+                        name="filter"
+                        onChange={() => externalFilterChanged("none")}
+                        defaultChecked={true}
+                    />
+                    All
+                </label>
+                <label>
+                    <input
+                        type="radio"
+                        name="filter"
+                        onChange={() => externalFilterChanged("favourite")}
+                    />
+                    Favourites
+                </label>
             </div>
             <div className={"country-grid"}>
                 <AgGridReact
