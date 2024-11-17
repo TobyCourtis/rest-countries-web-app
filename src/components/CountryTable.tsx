@@ -11,11 +11,29 @@ import './CountryTable.css';
 
 
 const CountryTable: React.FC = () => {
+    const LOCAL_STORAGE_FAVOURITES_KEY = "favourites";
+
     const [rowData, setRowData] = useState<CountryRow[]>([]);
-    const [favourites, setFavourites] = useState<Set<string>>(new Set());
+    const [favourites, setFavourites] = useState<Set<string>>(() => {
+        const storedFavourites = localStorage.getItem(LOCAL_STORAGE_FAVOURITES_KEY);
+        return storedFavourites ? new Set(JSON.parse(storedFavourites)) : new Set();
+    })
     const gridRef = useRef<AgGridReact<CountryRow>>(null);
     const [externalFilter, setExternalFilter] = useState<string>("none")
 
+    useEffect(() => {
+        fetchCountries()
+            .then((countries) =>
+                setRowData(
+                    mapCountryToRowData(countries)
+                )
+            )
+            .catch((error) => console.error('Error fetching countries:', error));
+    }, [setRowData]);
+
+    useEffect(() => {
+        localStorage.setItem(LOCAL_STORAGE_FAVOURITES_KEY, JSON.stringify(Array.from(favourites)));
+    }, [favourites]);
 
     function mapCountryToRowData(countries: Country[]) {
         let countryRows = countries.map((c): CountryRow => ({
@@ -31,15 +49,6 @@ const CountryTable: React.FC = () => {
         return countryRows;
     }
 
-    useEffect(() => {
-        fetchCountries()
-            .then((countries) =>
-                setRowData(
-                    mapCountryToRowData(countries)
-                )
-            )
-            .catch((error) => console.error('Error fetching countries:', error));
-    }, [setRowData]);
 
     const handleFavouriteChange = (countryName: string) => {
         setFavourites(prev => {
@@ -79,6 +88,7 @@ const CountryTable: React.FC = () => {
             field: 'isFavourite',
             cellRenderer: (params: CustomCellRendererProps) => (
                 <input
+                    alt={`favourite-checkbox-${params.data.name}`}
                     type="checkbox"
                     checked={favourites.has(params.data.name)}
                     onChange={() => handleFavouriteChange(params.data.name)}
