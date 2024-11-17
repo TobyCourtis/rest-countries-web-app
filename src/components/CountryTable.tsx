@@ -79,10 +79,10 @@ const CountryTable: React.FC = () => {
             cellRenderer: FlagRenderer,
             width: 100
         },
-        {headerName: 'Name', field: 'name', sortable: true, filter: true},
+        {headerName: 'Name', field: 'name', sortable: true, filter: 'agSetColumnFilter'},
         {headerName: 'Population', field: 'population', sortable: true},
-        {headerName: 'Languages', field: 'languages'},
-        {headerName: 'Currency', field: 'currency'},
+        {headerName: 'Languages', field: 'languages', filter: 'agSetColumnFilter'},
+        {headerName: 'Currency', field: 'currency', filter: 'agSetColumnFilter'},
         {
             headerName: 'Favourite',
             field: 'isFavourite',
@@ -171,9 +171,10 @@ const CountryTable: React.FC = () => {
                         }
                     }}
                     pagination={true}
-                    paginationPageSize={20}
+                    paginationPageSize={30}
                     isExternalFilterPresent={isExternalFilterPresent}
                     doesExternalFilterPass={doesExternalFilterPass}
+                    paginationAutoPageSize={true}
                 />
             </div>
         </div>
