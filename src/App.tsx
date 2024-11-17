@@ -7,7 +7,6 @@ function App() {
         <div className="App">
             <div className={'title'}>
                 <h1 id={'title'}>Rest Countries Web App</h1>
-
             </div>
             <div className={'country-table'}>
                 <CountryTable/>
