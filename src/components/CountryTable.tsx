@@ -1,6 +1,6 @@
 import {ColDef, IRowNode} from "ag-grid-community";
 import {Country, CountryRow} from "../types/Country";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import FlagRenderer from "../utils/FlagRenderer";
 import {fetchCountries} from "../api/api";
 import {AgGridReact, CustomCellRendererProps} from "ag-grid-react";
@@ -8,6 +8,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import './CountryTable.css';
+import CountryDataError from "./CountryDataError";
 
 
 const CountryTable: React.FC = () => {
@@ -79,10 +80,10 @@ const CountryTable: React.FC = () => {
             cellRenderer: FlagRenderer,
             width: 100
         },
-        {headerName: 'Name', field: 'name', sortable: true, filter: 'agSetColumnFilter'},
-        {headerName: 'Population', field: 'population', sortable: true},
-        {headerName: 'Languages', field: 'languages', filter: 'agSetColumnFilter'},
-        {headerName: 'Currency', field: 'currency', filter: 'agSetColumnFilter'},
+        {headerName: 'Name', field: 'name', sortable: true, filter: 'agSetColumnFilter', unSortIcon: true},
+        {headerName: 'Population', field: 'population', sortable: true, unSortIcon: true},
+        {headerName: 'Languages', field: 'languages', filter: 'agSetColumnFilter', unSortIcon: true},
+        {headerName: 'Currency', field: 'currency', filter: 'agSetColumnFilter', unSortIcon: true},
         {
             headerName: 'Favourite',
             field: 'isFavourite',
@@ -130,6 +131,12 @@ const CountryTable: React.FC = () => {
         );
     }, []);
 
+    const noRowsOverlayComponentParams = useMemo(() => {
+        return {
+            noRowsMessageFunc: () => 'No data found at: ' + new Date().toLocaleTimeString(),
+        };
+    }, []);
+
     return (
         <div className={'ag-theme-quartz-dark outer-country-table'}>
             <div className={'filter-content-div'}>
@@ -154,7 +161,7 @@ const CountryTable: React.FC = () => {
                 <input
                     type="text"
                     id="filter-text-box"
-                    placeholder="Filter..."
+                    placeholder=" Search..."
                     onInput={onFilterTextBoxChanged}
                 />
             </div>
@@ -175,6 +182,8 @@ const CountryTable: React.FC = () => {
                     isExternalFilterPresent={isExternalFilterPresent}
                     doesExternalFilterPass={doesExternalFilterPass}
                     paginationAutoPageSize={true}
+                    noRowsOverlayComponent={CountryDataError}
+                    noRowsOverlayComponentParams={noRowsOverlayComponentParams}
                 />
             </div>
         </div>

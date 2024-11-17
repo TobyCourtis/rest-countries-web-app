@@ -10,6 +10,11 @@ export const fetchCountries = async (): Promise<Country[]> => {
             return [];
         }
 
+        if (!data.length){
+            console.error('No country ata was returned from restcountries.com.');
+            return [];
+        }
+
         console.log(`Fetched ${data.length} countries.`);
         return data;
     } catch (error) {

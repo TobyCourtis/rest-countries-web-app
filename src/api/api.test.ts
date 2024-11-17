@@ -70,4 +70,16 @@ describe('fetchCountries', () => {
 
         consoleErrorSpy.mockRestore();
     });
+
+    it('should log error if empty array is returned from api', async () => {
+        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+        mockedAxios.get.mockResolvedValueOnce({ data: [] });
+
+        const result = await fetchCountries();
+
+        expect(result).toEqual([]);
+        expect(consoleErrorSpy).toHaveBeenCalledWith('No country ata was returned from restcountries.com.');
+
+        consoleErrorSpy.mockRestore();
+    });
 });

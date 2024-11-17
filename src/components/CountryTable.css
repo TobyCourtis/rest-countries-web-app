@@ -63,4 +63,12 @@
 
 #filter-text-box {
     height: var(--header-div-height);
+    background: #304059;
+    border-radius: 10px;
+    border: 1px white;
+}
+
+a {
+    color: #333333;
+    text-decoration: none;
 }
