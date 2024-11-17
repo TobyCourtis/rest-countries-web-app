@@ -22,7 +22,7 @@ const CountryTable: React.FC = () => {
     const gridRef = useRef<AgGridReact<CountryRow>>(null);
     const [externalFilter, setExternalFilter] = useState<string>("none")
 
-    useEffect(() => {
+    useMemo(() => {
         fetchCountries()
             .then((countries) =>
                 setRowData(
@@ -30,14 +30,14 @@ const CountryTable: React.FC = () => {
                 )
             )
             .catch((error) => console.error('Error fetching countries:', error));
-    }, [setRowData]);
+    }, []);
 
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_FAVOURITES_KEY, JSON.stringify(Array.from(favourites)));
     }, [favourites]);
 
     function mapCountryToRowData(countries: Country[]) {
-        let countryRows = countries.map((c): CountryRow => ({
+        return countries.map((c): CountryRow => ({
             name: c.name.common,
             flag: c.flags.png,
             population: c.population,
@@ -47,7 +47,6 @@ const CountryTable: React.FC = () => {
                 .join(', '),
             isFavourite: favourites.has(c.name.common)
         }));
-        return countryRows;
     }
 
 
