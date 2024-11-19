@@ -145,7 +145,7 @@ const CountryTable: React.FC = () => {
     };
 
     const countryRowSelected = (event: any) => {
-        if (event?.data) {
+        if (event?.data && event.colDef.field !== "isFavourite") {
             setSelectedCountry(event.data);
         }
     };
@@ -184,7 +184,7 @@ const CountryTable: React.FC = () => {
                     ref={gridRef}
                     rowData={rowData}
                     columnDefs={columns}
-                    onRowClicked={(e) => countryRowSelected(e)}
+                    onCellClicked={(e) => countryRowSelected(e)}
                     pagination={true}
                     paginationPageSize={30}
                     isExternalFilterPresent={isExternalFilterPresent}
